@@ -5,6 +5,7 @@ import com.specialist.code.domain.ITechnicalProduct;
 import com.specialist.code.domain.TechnicalProduct;
 
 public class ProductFactory implements IProductFactory{
+    @Override
     public CommonProduct create(String id, String name, String description, double price) {
         return new CommonProduct(id, name, description, price);
     }
