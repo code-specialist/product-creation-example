@@ -5,10 +5,9 @@ public class CommonProductResponseModel {
     private String name;
     private String description;
     private double price;
+    private String createdAt;
 
-    private long createdAt;
-
-    public CommonProductResponseModel(String id, String name, String description, double price, long createdAt) {
+    public CommonProductResponseModel(String id, String name, String description, double price, String createdAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -48,11 +47,11 @@ public class CommonProductResponseModel {
         this.price = price;
     }
 
-    public long getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(long createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 }
