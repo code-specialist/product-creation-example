@@ -37,7 +37,7 @@ public class TechnicalProductInteractor implements ITechnicalProductInputBoundar
 
         gateway.save(technicalProduct);
 
-        TechnicalProductResponseModel responseModel = new TechnicalProductResponseModel(technicalProduct.getId(), technicalProduct.getName(), technicalProduct.getDescription(), technicalProduct.getPrice(), requestModel.getTechnicalInformation(), requestModel.getInstructionManual(), technicalProduct.getCreatedAt());
+        TechnicalProductResponseModel responseModel = new TechnicalProductResponseModel(technicalProduct.getId(), technicalProduct.getName(), technicalProduct.getDescription(), technicalProduct.getPrice(), requestModel.getTechnicalInformation(), requestModel.getInstructionManual(), String.valueOf(technicalProduct.getCreatedAt()));
 
         return presenter.prepareSuccessView(responseModel);
     }

@@ -28,7 +28,7 @@ public class CommonProductInteractor implements ICommonProductInputBoundary {
     @Override
     public CommonProductResponseModel create(CommonProductRequestModel requestModel) {
         if (gateway.existsById(requestModel.getId())) {
-            presenter.prepareFailView("TechnicalProduct with id " + requestModel.getId() + " already in database");
+            presenter.prepareFailView("Product with id " + requestModel.getId() + " already in database");
         }
         IProduct commonProduct = factory.create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice());
 

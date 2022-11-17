@@ -7,9 +7,9 @@ public class TechnicalProductResponseModel {
     private double price;
     private String technicalInformation;
     private String instructionManual;
-    private long createdAt;
+    private String createdAt;
 
-    public TechnicalProductResponseModel(String id, String name, String description, double price, String technicalInformation, String instructionManual, long createdAt) {
+    public TechnicalProductResponseModel(String id, String name, String description, double price, String technicalInformation, String instructionManual, String createdAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -67,11 +67,11 @@ public class TechnicalProductResponseModel {
         this.instructionManual = instructionManual;
     }
 
-    public long getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(long createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 }

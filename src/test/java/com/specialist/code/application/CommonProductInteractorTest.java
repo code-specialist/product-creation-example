@@ -32,22 +32,31 @@ public class CommonProductInteractorTest {
     void givenValidCommonProductProperties_whenCreate_thenSaveItAndPrepareSuccessView(){
         // ARRANGE
         CommonProductRequestModel requestModel = new CommonProductRequestModel("TestId", "ValidTestName", "Test description", 52.2);
-
         long timestmap = 1668617824L;
         CommonProduct product = new CommonProduct("001", "ValidName", "Some Description", 25.25d, timestmap);
+        CommonProductResponseModel responseModel = new CommonProductResponseModel(product.getId(), product.getName(), product.getDescription(), product.getPrice(), String.valueOf(product.getCreatedAt()));
+        CommonProductResponseModel finalResponseModel = new CommonProductResponseModel(product.getId(), product.getName(), product.getDescription(), product.getPrice(), "2022-11-16");
         Mockito.when(mockedGateway.existsById(requestModel.getId())).thenReturn(false);
         Mockito.when(mockedFactory.create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice())).thenReturn(product);
-        CommonProductResponseModel responseModel = Mockito.verify(mockedPresenter.prepareSuccessView(new CommonProductResponseModel(product.getId(), product.getName(), product.getDescription(), product.getPrice(), String.valueOf(timestmap))), Mockito.times(1));
+        Mockito.when(mockedPresenter.prepareSuccessView(responseModel)).thenReturn(finalResponseModel);
+
         CommonProductInteractor interactor = new CommonProductInteractor(mockedPresenter, mockedFactory, mockedGateway);
 
         // ACT
         interactor.create(requestModel);
 
         // ASSERT
-        Assertions.assertEquals("2022-11-16", responseModel.getCreatedAt());
+        Assertions.assertEquals("2022-11-16", finalResponseModel.getCreatedAt());
 
         Mockito.verify(mockedGateway, Mockito.times(1)).save(product);
         Mockito.verify(mockedGateway, Mockito.times(1)).existsById(requestModel.getId());
+        CommonProductResponseModel verifyResponseModel = Mockito.verify(mockedPresenter, Mockito.times(1)).prepareSuccessView(finalResponseModel);
+        Assertions.assertEquals(finalResponseModel.getId(), verifyResponseModel.getId());
+        Assertions.assertEquals(finalResponseModel.getName(), verifyResponseModel.getName());
+        Assertions.assertEquals(finalResponseModel.getDescription(), verifyResponseModel.getDescription());
+        Assertions.assertEquals(finalResponseModel.getPrice(), verifyResponseModel.getPrice());
+        Assertions.assertEquals("2022-11-16", verifyResponseModel.getCreatedAt());
+
     }
 
     @Test
@@ -56,8 +65,6 @@ public class CommonProductInteractorTest {
         CommonProductRequestModel requestModel = new CommonProductRequestModel("TestId", "123", "Test description", 52.2);
 
         long timestmap = 1668617824L;
-
-
         CommonProduct product = new CommonProduct("001", "123", "Some Description", 25.25d, timestmap);
         Mockito.when(mockedGateway.existsById(requestModel.getId())).thenReturn(true);
         Mockito.when(mockedFactory.create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice())).thenReturn(product);
@@ -71,7 +78,9 @@ public class CommonProductInteractorTest {
 
         // ASSERT
         Assertions.assertTrue(failViewException.getMessage().contains(expectedMessage));
+        Mockito.verify(mockedFactory, Mockito.times(1)).create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice());
         Mockito.verify(mockedGateway, Mockito.times(1)).existsById(requestModel.getId());
+        Mockito.verify(mockedPresenter, Mockito.times(1)).prepareFailView(expectedMessage);
     }
 
 
@@ -88,7 +97,7 @@ public class CommonProductInteractorTest {
         Mockito.when(mockedGateway.existsById(requestModel.getId())).thenReturn(false);
         Mockito.when(mockedFactory.create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice())).thenReturn(product);
 
-        String expectedMessage = "Name 123 is not valid";
+        String expectedMessage = "Product with id 123 already in database";
 
         // ACT
         Exception failViewException = Assertions.assertThrows(Exception.class, () -> {
@@ -98,6 +107,8 @@ public class CommonProductInteractorTest {
         // ASSERT
         Assertions.assertTrue(failViewException.getMessage().contains(expectedMessage));
         Mockito.verify(mockedGateway, Mockito.times(1)).existsById(requestModel.getId());
+        Mockito.verify(mockedPresenter, Mockito.times(1)).prepareFailView(expectedMessage);
+
     }
 
 }
