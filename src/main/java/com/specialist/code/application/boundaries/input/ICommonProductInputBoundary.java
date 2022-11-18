@@ -6,5 +6,5 @@ import com.specialist.code.application.model.response.CommonProductResponseModel
 import com.specialist.code.application.model.response.TechnicalProductResponseModel;
 
 public interface ICommonProductInputBoundary {
-    CommonProductResponseModel create(CommonProductRequestModel requestModel);
+    CommonProductResponseModel create(CommonProductRequestModel requestModel) throws Exception;
 }

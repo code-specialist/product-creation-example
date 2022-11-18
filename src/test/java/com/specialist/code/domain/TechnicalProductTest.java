@@ -1,6 +1,5 @@
 package com.specialist.code.domain;
 
-import com.specialist.code.domain.TechnicalProduct;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;

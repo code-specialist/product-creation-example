@@ -1,7 +1,10 @@
 package com.specialist.code.application;
 
 import com.specialist.code.application.boundaries.output.ITechnicalProdutRegisterGateway;
-import com.specialist.code.application.interactors.CommonProductInteractor;
+import com.specialist.code.application.exception.CustomProductException;
+import com.specialist.code.application.exception.InvalidNameException;
+import com.specialist.code.application.exception.InvalidTechnicalInformationException;
+import com.specialist.code.application.exception.ProductAlreadyExistsException;
 import com.specialist.code.application.interactors.TechnicalProductInteractor;
 import com.specialist.code.application.model.request.TechnicalProductRequestModel;
 import com.specialist.code.application.model.response.TechnicalProductResponseModel;
@@ -10,24 +13,26 @@ import com.specialist.code.domain.ITechnicalProduct;
 import com.specialist.code.domain.TechnicalProduct;
 import com.specialist.code.domain.factories.ITechnicalProductFactory;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import java.time.Instant;
-
 public class TechnicalProductInteractorTest {
-    @Mock
     private ITechnicalProdutRegisterGateway gateway;
 
-    @Mock
     private ITechnicalProductFactory factory;
 
-    @Mock
     private ITechnicalProductPresenter presenter;
 
+    @BeforeEach
+    void setup(){
+        gateway = Mockito.mock(ITechnicalProdutRegisterGateway.class);
+        factory = Mockito.mock(ITechnicalProductFactory.class);
+        presenter = Mockito.mock(ITechnicalProductPresenter.class);
+    }
+
     @Test
-    void givenValidTechnicalProperties_whenCreate_thenPrepareSuccessView() {
+    void givenValidTechnicalProperties_whenCreate_thenPrepareSuccessView() throws CustomProductException {
         // ARRANGE
         long timestamp = 1668617824L;
         TechnicalProductRequestModel requestModel = new TechnicalProductRequestModel("SomeId", "ValidName", "Some description",
@@ -38,16 +43,16 @@ public class TechnicalProductInteractorTest {
         TechnicalProductResponseModel responseModel = new TechnicalProductResponseModel(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getTechnicalInformation(), product.getInstructionManual(), String.valueOf(timestamp));
         TechnicalProductResponseModel finalResponseModel = new TechnicalProductResponseModel(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getTechnicalInformation(), product.getInstructionManual(), "2022-11-16");
 
-        Mockito.when(gateway.existsById(product.getId())).thenReturn(true);
+        Mockito.when(gateway.existsById(product.getId())).thenReturn(false);
         Mockito.when(factory.create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice(), requestModel.getTechnicalInformation(), requestModel.getInstructionManual())).thenReturn(product);
         Mockito.when(presenter.prepareSuccessView(responseModel)).thenReturn(finalResponseModel);
 
         // ACT
         TechnicalProductInteractor interactor = new TechnicalProductInteractor(factory, presenter, gateway);
-        interactor.create(requestModel);
+        TechnicalProductResponseModel verifyResponseModel = interactor.create(requestModel);
 
         Mockito.verify(gateway, Mockito.times(1)).save(product);
-        TechnicalProductResponseModel verifyResponseModel = Mockito.verify(presenter, Mockito.times(1)).prepareSuccessView(responseModel);
+        Mockito.verify(presenter, Mockito.times(1)).prepareSuccessView(responseModel);
 
         Assertions.assertEquals(finalResponseModel.getId(), verifyResponseModel.getId());
         Assertions.assertEquals(finalResponseModel.getName(), verifyResponseModel.getName());
@@ -59,14 +64,18 @@ public class TechnicalProductInteractorTest {
     }
 
     @Test
-    void givenTechnicalProductAlreadyExists_whenCreate_thenPrepareFailView(){
+    void givenTechnicalProductAlreadyExists_whenCreate_thenPrepareFailView() throws CustomProductException {
         // ARRANGE
         TechnicalProductRequestModel requestModel = new TechnicalProductRequestModel("ExistingID", "ValidName", "Some description",
                 25.68, "A valid technical information", "A valid technical manual");
         Mockito.when(gateway.existsById(requestModel.getId())).thenReturn(true);
+
         String errorMessage = "TechnicalProduct with id ExistingID already in database";
-        Exception failViewException = Assertions.assertThrows(Exception.class, () -> {
-            presenter.prepareFailView(errorMessage);
+        ProductAlreadyExistsException alreadyExistsException = new ProductAlreadyExistsException(errorMessage);
+        Mockito.when(presenter.prepareFailView(alreadyExistsException)).thenThrow(alreadyExistsException);
+
+        Exception failViewException = Assertions.assertThrows(CustomProductException.class, () -> {
+            presenter.prepareFailView(alreadyExistsException);
         });
 
         // ACT
@@ -76,11 +85,11 @@ public class TechnicalProductInteractorTest {
         // ASSERT
         Assertions.assertTrue(failViewException.getMessage().contains(errorMessage));
         Mockito.verify(gateway, Mockito.times(1)).existsById(requestModel.getId());
-        Mockito.verify(presenter, Mockito.times(1)).prepareFailView(errorMessage);
+        Mockito.verify(presenter, Mockito.times(1)).prepareFailView(alreadyExistsException);
     }
 
     @Test
-    void givenTechnicalProductWithInvalidName_whenCreate_thenPrepareFailView(){
+    void givenTechnicalProductWithInvalidName_whenCreate_thenPrepareFailView() throws CustomProductException {
         // ARRANGE
         long timestamp = 1668617824L;
         TechnicalProductRequestModel requestModel = new TechnicalProductRequestModel("SomeId", "123", "Some description",
@@ -91,8 +100,11 @@ public class TechnicalProductInteractorTest {
         Mockito.when(gateway.existsById(product.getId())).thenReturn(false);
         Mockito.when(factory.create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice(), requestModel.getTechnicalInformation(), requestModel.getInstructionManual())).thenReturn(product);
         String errorMessage = "Name 123 is not valid";
+        InvalidNameException invalidNameException = new InvalidNameException(errorMessage);
+        Mockito.when(presenter.prepareFailView(invalidNameException)).thenThrow(invalidNameException);
+
         Exception failViewException = Assertions.assertThrows(Exception.class, () -> {
-            presenter.prepareFailView(errorMessage);
+            presenter.prepareFailView(invalidNameException);
         });
 
         // ACT
@@ -103,23 +115,25 @@ public class TechnicalProductInteractorTest {
         Assertions.assertTrue(failViewException.getMessage().contains(errorMessage));
         Mockito.verify(gateway, Mockito.times(1)).existsById(product.getId());
         Mockito.verify(factory, Mockito.times(1)).create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice(), requestModel.getTechnicalInformation(), requestModel.getInstructionManual());
-        Mockito.verify(presenter, Mockito.times(1)).prepareFailView(errorMessage);
+        Mockito.verify(presenter, Mockito.times(1)).prepareFailView(invalidNameException);
     }
 
     @Test
-    void givenTechnicalProductWithInvalidTechnicalInformation_whenCreate_thenPrepareFailView(){
+    void givenTechnicalProductWithInvalidTechnicalInformation_whenCreate_thenPrepareFailView() throws CustomProductException {
         // ARRANGE
         long timestamp = 1668617824L;
         TechnicalProductRequestModel requestModel = new TechnicalProductRequestModel("SomeId", "ValidName", "Some description",
-                25.68, "123", "A valid technical manual");
+                25.68, "", "A valid technical manual");
         ITechnicalProduct product = new TechnicalProduct(requestModel.getId(), requestModel.getName(), requestModel.getDescription(),
                 requestModel.getPrice(), requestModel.getTechnicalInformation(), requestModel.getInstructionManual(),
                 timestamp);
         Mockito.when(gateway.existsById(product.getId())).thenReturn(false);
         Mockito.when(factory.create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice(), requestModel.getTechnicalInformation(), requestModel.getInstructionManual())).thenReturn(product);
         String errorMessage = "Technical information 123 is not valid";
-        Exception failViewException = Assertions.assertThrows(Exception.class, () -> {
-            presenter.prepareFailView(errorMessage);
+        InvalidTechnicalInformationException invalidTechnicalInformationException = new InvalidTechnicalInformationException(errorMessage);
+        Mockito.when(presenter.prepareFailView(invalidTechnicalInformationException)).thenThrow(invalidTechnicalInformationException);
+        Exception failViewException = Assertions.assertThrows(InvalidTechnicalInformationException.class, () -> {
+            presenter.prepareFailView(invalidTechnicalInformationException);
         });
 
         // ACT
@@ -130,6 +144,6 @@ public class TechnicalProductInteractorTest {
         Assertions.assertTrue(failViewException.getMessage().contains(errorMessage));
         Mockito.verify(gateway, Mockito.times(1)).existsById(product.getId());
         Mockito.verify(factory, Mockito.times(1)).create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice(), requestModel.getTechnicalInformation(), requestModel.getInstructionManual());
-        Mockito.verify(presenter, Mockito.times(1)).prepareFailView(errorMessage);
+        Mockito.verify(presenter, Mockito.times(1)).prepareFailView(invalidTechnicalInformationException);
     }
 }

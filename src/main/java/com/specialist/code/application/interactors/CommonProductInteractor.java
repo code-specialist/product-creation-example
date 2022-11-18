@@ -2,17 +2,14 @@ package com.specialist.code.application.interactors;
 
 import com.specialist.code.application.boundaries.input.ICommonProductInputBoundary;
 import com.specialist.code.application.boundaries.output.ICommonProductRegisterGateway;
+import com.specialist.code.application.exception.CustomProductException;
+import com.specialist.code.application.exception.InvalidNameException;
+import com.specialist.code.application.exception.ProductAlreadyExistsException;
 import com.specialist.code.application.model.request.CommonProductRequestModel;
-import com.specialist.code.application.model.request.TechnicalProductRequestModel;
 import com.specialist.code.application.model.response.CommonProductResponseModel;
-import com.specialist.code.application.model.response.TechnicalProductResponseModel;
 import com.specialist.code.application.presenter.ICommonProductPresenter;
 import com.specialist.code.domain.IProduct;
-import com.specialist.code.domain.ITechnicalProduct;
 import com.specialist.code.domain.factories.ICommonProductFactory;
-import com.specialist.code.domain.factories.ITechnicalProductFactory;
-
-import java.time.format.DateTimeFormatter;
 
 public class CommonProductInteractor implements ICommonProductInputBoundary {
     ICommonProductPresenter presenter;
@@ -26,14 +23,14 @@ public class CommonProductInteractor implements ICommonProductInputBoundary {
     }
 
     @Override
-    public CommonProductResponseModel create(CommonProductRequestModel requestModel) {
+    public CommonProductResponseModel create(CommonProductRequestModel requestModel) throws CustomProductException {
         if (gateway.existsById(requestModel.getId())) {
-            presenter.prepareFailView("Product with id " + requestModel.getId() + " already in database");
+            return presenter.prepareFailView(new ProductAlreadyExistsException("Product with id " + requestModel.getId() + " already in database"));
         }
         IProduct commonProduct = factory.create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice());
 
         if (!commonProduct.nameIsValid()) {
-            presenter.prepareFailView("Name " + commonProduct.getName() + " is not valid");
+            return presenter.prepareFailView(new InvalidNameException("Name " + commonProduct.getName() + " is not valid"));
         }
 
         gateway.save(commonProduct);

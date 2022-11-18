@@ -56,6 +56,6 @@ public class TechnicalProduct implements ITechnicalProduct{
 
     @Override
     public boolean technicalInformationIsValid() {
-        return !this.technicalInformation.isEmpty();
+        return !technicalInformation.isEmpty();
     }
 }

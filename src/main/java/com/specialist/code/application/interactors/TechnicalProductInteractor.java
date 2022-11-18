@@ -2,13 +2,16 @@ package com.specialist.code.application.interactors;
 
 import com.specialist.code.application.boundaries.input.ITechnicalProductInputBoundary;
 import com.specialist.code.application.boundaries.output.ITechnicalProdutRegisterGateway;
-import com.specialist.code.application.model.request.CommonProductRequestModel;
+import com.specialist.code.application.exception.CustomProductException;
+import com.specialist.code.application.exception.InvalidNameException;
+import com.specialist.code.application.exception.InvalidTechnicalInformationException;
 import com.specialist.code.application.model.request.TechnicalProductRequestModel;
-import com.specialist.code.application.model.response.CommonProductResponseModel;
 import com.specialist.code.application.model.response.TechnicalProductResponseModel;
 import com.specialist.code.application.presenter.ITechnicalProductPresenter;
 import com.specialist.code.domain.ITechnicalProduct;
 import com.specialist.code.domain.factories.ITechnicalProductFactory;
+
+import java.nio.file.FileAlreadyExistsException;
 
 public class TechnicalProductInteractor implements ITechnicalProductInputBoundary {
     ITechnicalProductFactory factory;
@@ -22,17 +25,17 @@ public class TechnicalProductInteractor implements ITechnicalProductInputBoundar
     }
 
     @Override
-    public TechnicalProductResponseModel create(TechnicalProductRequestModel requestModel) {
+    public TechnicalProductResponseModel create(TechnicalProductRequestModel requestModel) throws CustomProductException {
         if (gateway.existsById(requestModel.getId())) {
-            presenter.prepareFailView("TechnicalProduct with id " + requestModel.getId() + " already in database");
+            return presenter.prepareFailView(new FileAlreadyExistsException("TechnicalProduct with id " + requestModel.getId() + " already in database"));
         }
         ITechnicalProduct technicalProduct = factory.create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice(), requestModel.getTechnicalInformation(), requestModel.getInstructionManual());
 
         if (!technicalProduct.nameIsValid()) {
-            presenter.prepareFailView("Name " + technicalProduct.getName() + " is not valid");
+            return presenter.prepareFailView(new InvalidNameException("Name " + technicalProduct.getName() + " is not valid"));
         }
         if (!technicalProduct.technicalInformationIsValid()) {
-            presenter.prepareFailView("Technical information " + technicalProduct.getTechnicalInformation() + " is not valid");
+            return presenter.prepareFailView(new InvalidTechnicalInformationException("Technical information " + technicalProduct.getTechnicalInformation() + " is not valid"));
         }
 
         gateway.save(technicalProduct);
