@@ -4,5 +4,5 @@ import com.specialist.code.application.model.request.TechnicalProductRequestMode
 import com.specialist.code.domain.ITechnicalProduct;
 
 public interface ITechnicalProdutRegisterGateway extends IProductExistsGateway{
-    void save(ITechnicalProduct requestModel);
+    void save(ITechnicalProduct iTechnicalProduct);
 }

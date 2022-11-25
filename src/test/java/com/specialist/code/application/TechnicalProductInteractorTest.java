@@ -1,7 +1,7 @@
 package com.specialist.code.application;
 
 import com.specialist.code.application.boundaries.output.ITechnicalProdutRegisterGateway;
-import com.specialist.code.application.exception.CustomProductException;
+import com.specialist.code.application.exception.ProductCustomException;
 import com.specialist.code.application.exception.InvalidNameException;
 import com.specialist.code.application.exception.InvalidTechnicalInformationException;
 import com.specialist.code.application.exception.ProductAlreadyExistsException;
@@ -32,7 +32,7 @@ public class TechnicalProductInteractorTest {
     }
 
     @Test
-    void givenValidTechnicalProperties_whenCreate_thenPrepareSuccessView() throws CustomProductException {
+    void givenValidTechnicalProperties_whenCreate_thenPrepareSuccessView() throws ProductCustomException {
         // ARRANGE
         long timestamp = 1668617824L;
         TechnicalProductRequestModel requestModel = new TechnicalProductRequestModel("SomeId", "ValidName", "Some description",
@@ -64,7 +64,7 @@ public class TechnicalProductInteractorTest {
     }
 
     @Test
-    void givenTechnicalProductAlreadyExists_whenCreate_thenPrepareFailView() throws CustomProductException {
+    void givenTechnicalProductAlreadyExists_whenCreate_thenPrepareFailView() throws ProductCustomException {
         // ARRANGE
         TechnicalProductRequestModel requestModel = new TechnicalProductRequestModel("ExistingID", "ValidName", "Some description",
                 25.68, "A valid technical information", "A valid technical manual");
@@ -74,7 +74,7 @@ public class TechnicalProductInteractorTest {
         ProductAlreadyExistsException alreadyExistsException = new ProductAlreadyExistsException(errorMessage);
         Mockito.when(presenter.prepareFailView(alreadyExistsException)).thenThrow(alreadyExistsException);
 
-        Exception failViewException = Assertions.assertThrows(CustomProductException.class, () -> {
+        Exception failViewException = Assertions.assertThrows(ProductCustomException.class, () -> {
             presenter.prepareFailView(alreadyExistsException);
         });
 
@@ -89,7 +89,7 @@ public class TechnicalProductInteractorTest {
     }
 
     @Test
-    void givenTechnicalProductWithInvalidName_whenCreate_thenPrepareFailView() throws CustomProductException {
+    void givenTechnicalProductWithInvalidName_whenCreate_thenPrepareFailView() throws ProductCustomException {
         // ARRANGE
         long timestamp = 1668617824L;
         TechnicalProductRequestModel requestModel = new TechnicalProductRequestModel("SomeId", "123", "Some description",
@@ -119,7 +119,7 @@ public class TechnicalProductInteractorTest {
     }
 
     @Test
-    void givenTechnicalProductWithInvalidTechnicalInformation_whenCreate_thenPrepareFailView() throws CustomProductException {
+    void givenTechnicalProductWithInvalidTechnicalInformation_whenCreate_thenPrepareFailView() throws ProductCustomException {
         // ARRANGE
         long timestamp = 1668617824L;
         TechnicalProductRequestModel requestModel = new TechnicalProductRequestModel("SomeId", "ValidName", "Some description",

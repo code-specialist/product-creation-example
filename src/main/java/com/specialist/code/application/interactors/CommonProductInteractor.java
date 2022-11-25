@@ -2,7 +2,7 @@ package com.specialist.code.application.interactors;
 
 import com.specialist.code.application.boundaries.input.ICommonProductInputBoundary;
 import com.specialist.code.application.boundaries.output.ICommonProductRegisterGateway;
-import com.specialist.code.application.exception.CustomProductException;
+import com.specialist.code.application.exception.ProductCustomException;
 import com.specialist.code.application.exception.InvalidNameException;
 import com.specialist.code.application.exception.ProductAlreadyExistsException;
 import com.specialist.code.application.model.request.CommonProductRequestModel;
@@ -23,7 +23,7 @@ public class CommonProductInteractor implements ICommonProductInputBoundary {
     }
 
     @Override
-    public CommonProductResponseModel create(CommonProductRequestModel requestModel) throws CustomProductException {
+    public CommonProductResponseModel create(CommonProductRequestModel requestModel) throws ProductCustomException {
         if (gateway.existsById(requestModel.getId())) {
             return presenter.prepareFailView(new ProductAlreadyExistsException("Product with id " + requestModel.getId() + " already in database"));
         }

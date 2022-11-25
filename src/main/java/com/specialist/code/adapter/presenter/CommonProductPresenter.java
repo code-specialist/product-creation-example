@@ -1,14 +1,12 @@
 package com.specialist.code.adapter.presenter;
 
-import com.specialist.code.application.exception.CustomProductException;
+import com.specialist.code.application.exception.ProductCustomException;
 import com.specialist.code.application.model.response.CommonProductResponseModel;
 import com.specialist.code.application.presenter.ICommonProductPresenter;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 public class CommonProductPresenter implements ICommonProductPresenter {
     @Override
-    public CommonProductResponseModel prepareFailView(CustomProductException e) throws CustomProductException{
+    public CommonProductResponseModel prepareFailView(ProductCustomException e) throws ProductCustomException {
         throw e;
     }
 

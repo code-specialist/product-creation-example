@@ -1,7 +1,7 @@
 package com.specialist.code.application;
 
 import com.specialist.code.application.boundaries.output.ICommonProductRegisterGateway;
-import com.specialist.code.application.exception.CustomProductException;
+import com.specialist.code.application.exception.ProductCustomException;
 import com.specialist.code.application.exception.InvalidNameException;
 import com.specialist.code.application.exception.ProductAlreadyExistsException;
 import com.specialist.code.application.interactors.CommonProductInteractor;
@@ -31,7 +31,7 @@ public class CommonProductInteractorTest {
     }
 
     @Test
-    void givenValidCommonProductProperties_whenCreate_thenSaveItAndPrepareSuccessView() throws CustomProductException {
+    void givenValidCommonProductProperties_whenCreate_thenSaveItAndPrepareSuccessView() throws ProductCustomException {
         // ARRANGE
         CommonProductRequestModel requestModel = new CommonProductRequestModel("TestId", "ValidTestName", "Test description", 52.2);
         long timestmap = 1668617824L;
@@ -63,7 +63,7 @@ public class CommonProductInteractorTest {
     }
 
     @Test
-    void givenExistingProduct_whenCreate_thenPrepareFailView_withInvalidNameException() throws CustomProductException {
+    void givenExistingProduct_whenCreate_thenPrepareFailView_withInvalidNameException() throws ProductCustomException {
         // ARRANGE
         CommonProductRequestModel requestModel = new CommonProductRequestModel("TestId", "123", "Test description", 52.2);
 
@@ -92,7 +92,7 @@ public class CommonProductInteractorTest {
 
 
     @Test
-    void given123Name_whenCreate_thenPrepareFailView_withAlreadyContainsException() throws CustomProductException {
+    void given123Name_whenCreate_thenPrepareFailView_withAlreadyContainsException() throws ProductCustomException {
 
         // ARRANGE
         CommonProductRequestModel requestModel = new CommonProductRequestModel("TestId", "123", "Test description", 52.2);
@@ -106,7 +106,7 @@ public class CommonProductInteractorTest {
         String expectedMessage = "Product with id 123 already in database";
         ProductAlreadyExistsException customProductException = new ProductAlreadyExistsException(expectedMessage);
         Mockito.when(mockedPresenter.prepareFailView(customProductException)).thenThrow(customProductException);
-        Exception failViewException = Assertions.assertThrows(CustomProductException.class, () -> {
+        Exception failViewException = Assertions.assertThrows(ProductCustomException.class, () -> {
             mockedPresenter.prepareFailView(customProductException);
         });
 

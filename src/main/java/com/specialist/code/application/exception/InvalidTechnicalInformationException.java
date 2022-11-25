@@ -1,6 +1,6 @@
 package com.specialist.code.application.exception;
 
-public class InvalidTechnicalInformationException extends CustomProductException{
+public class InvalidTechnicalInformationException extends ProductCustomException {
     public InvalidTechnicalInformationException() {
     }
 

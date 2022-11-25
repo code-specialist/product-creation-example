@@ -2,7 +2,7 @@ package com.specialist.code.application.interactors;
 
 import com.specialist.code.application.boundaries.input.ITechnicalProductInputBoundary;
 import com.specialist.code.application.boundaries.output.ITechnicalProdutRegisterGateway;
-import com.specialist.code.application.exception.CustomProductException;
+import com.specialist.code.application.exception.ProductCustomException;
 import com.specialist.code.application.exception.InvalidNameException;
 import com.specialist.code.application.exception.InvalidTechnicalInformationException;
 import com.specialist.code.application.model.request.TechnicalProductRequestModel;
@@ -25,7 +25,7 @@ public class TechnicalProductInteractor implements ITechnicalProductInputBoundar
     }
 
     @Override
-    public TechnicalProductResponseModel create(TechnicalProductRequestModel requestModel) throws CustomProductException {
+    public TechnicalProductResponseModel create(TechnicalProductRequestModel requestModel) throws ProductCustomException {
         if (gateway.existsById(requestModel.getId())) {
             return presenter.prepareFailView(new FileAlreadyExistsException("TechnicalProduct with id " + requestModel.getId() + " already in database"));
         }

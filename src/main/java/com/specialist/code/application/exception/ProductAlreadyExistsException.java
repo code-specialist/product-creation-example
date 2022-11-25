@@ -1,6 +1,6 @@
 package com.specialist.code.application.exception;
 
-public class ProductAlreadyExistsException extends CustomProductException{
+public class ProductAlreadyExistsException extends ProductCustomException {
     public ProductAlreadyExistsException() {
     }
 

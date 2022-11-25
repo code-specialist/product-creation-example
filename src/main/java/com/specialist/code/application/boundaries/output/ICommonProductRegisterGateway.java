@@ -5,5 +5,5 @@ import com.specialist.code.domain.CommonProduct;
 import com.specialist.code.domain.IProduct;
 
 public interface ICommonProductRegisterGateway extends IProductExistsGateway{
-    void save(IProduct requestModel);
+    void save(IProduct iProduct);
 }

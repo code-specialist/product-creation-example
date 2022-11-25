@@ -1,6 +1,6 @@
 package com.specialist.code.application.exception;
 
-public class InvalidNameException extends CustomProductException{
+public class InvalidNameException extends ProductCustomException {
     public InvalidNameException() {
     }
 
