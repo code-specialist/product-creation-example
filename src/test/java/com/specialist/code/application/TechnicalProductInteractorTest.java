@@ -46,7 +46,6 @@ public class TechnicalProductInteractorTest {
         Mockito.when(gateway.existsById(product.getId())).thenReturn(false);
         Mockito.when(factory.create(requestModel.getId(), requestModel.getName(), requestModel.getDescription(), requestModel.getPrice(), requestModel.getTechnicalInformation(), requestModel.getInstructionManual())).thenReturn(product);
         Mockito.when(presenter.prepareSuccessView(responseModel)).thenReturn(finalResponseModel);
-
         // ACT
         TechnicalProductInteractor interactor = new TechnicalProductInteractor(factory, presenter, gateway);
         TechnicalProductResponseModel verifyResponseModel = interactor.create(requestModel);
@@ -74,9 +73,7 @@ public class TechnicalProductInteractorTest {
         ProductAlreadyExistsException alreadyExistsException = new ProductAlreadyExistsException(errorMessage);
         Mockito.when(presenter.prepareFailView(alreadyExistsException)).thenThrow(alreadyExistsException);
 
-        Exception failViewException = Assertions.assertThrows(ProductCustomException.class, () -> {
-            presenter.prepareFailView(alreadyExistsException);
-        });
+        Exception failViewException = Assertions.assertThrows(ProductCustomException.class, () -> presenter.prepareFailView(alreadyExistsException));
 
         // ACT
         TechnicalProductInteractor interactor = new TechnicalProductInteractor(factory, presenter, gateway);
@@ -103,9 +100,7 @@ public class TechnicalProductInteractorTest {
         InvalidNameException invalidNameException = new InvalidNameException(errorMessage);
         Mockito.when(presenter.prepareFailView(invalidNameException)).thenThrow(invalidNameException);
 
-        Exception failViewException = Assertions.assertThrows(Exception.class, () -> {
-            presenter.prepareFailView(invalidNameException);
-        });
+        Exception failViewException = Assertions.assertThrows(Exception.class, () -> presenter.prepareFailView(invalidNameException));
 
         // ACT
         TechnicalProductInteractor interactor = new TechnicalProductInteractor(factory, presenter, gateway);
@@ -132,9 +127,7 @@ public class TechnicalProductInteractorTest {
         String errorMessage = "Technical information 123 is not valid";
         InvalidTechnicalInformationException invalidTechnicalInformationException = new InvalidTechnicalInformationException(errorMessage);
         Mockito.when(presenter.prepareFailView(invalidTechnicalInformationException)).thenThrow(invalidTechnicalInformationException);
-        Exception failViewException = Assertions.assertThrows(InvalidTechnicalInformationException.class, () -> {
-            presenter.prepareFailView(invalidTechnicalInformationException);
-        });
+        Exception failViewException = Assertions.assertThrows(InvalidTechnicalInformationException.class, () -> presenter.prepareFailView(invalidTechnicalInformationException));
 
         // ACT
         TechnicalProductInteractor interactor = new TechnicalProductInteractor(factory, presenter, gateway);

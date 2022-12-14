@@ -1,10 +1,6 @@
-package com.specialist.code.adapter;
+package com.specialist.code.adapter.start;
 
-/**
- * Hello world!
- *
- */
-public class App 
+public class App
 {
     public static void main( String[] args )
     {

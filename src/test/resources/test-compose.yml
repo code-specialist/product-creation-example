@@ -1,0 +1,4 @@
+mongo:
+  image: mongo:latest # use the latest image.
+  ports:
+    - 27017:27017
