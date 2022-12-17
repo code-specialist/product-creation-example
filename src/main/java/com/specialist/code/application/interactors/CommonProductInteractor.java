@@ -1,6 +1,6 @@
 package com.specialist.code.application.interactors;
 
-import com.specialist.code.application.boundaries.input.ICommonProductInputBoundary;
+import com.specialist.code.application.boundaries.input.register.ICommonProductInputBoundary;
 import com.specialist.code.application.boundaries.output.ICommonProductRegisterGateway;
 import com.specialist.code.application.exception.ProductCustomException;
 import com.specialist.code.application.exception.InvalidNameException;

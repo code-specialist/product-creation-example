@@ -1,4 +1,4 @@
-package com.specialist.code.application.boundaries.input;
+package com.specialist.code.application.boundaries.input.register;
 
 import com.specialist.code.application.exception.ProductCustomException;
 import com.specialist.code.application.model.request.TechnicalProductRequestModel;

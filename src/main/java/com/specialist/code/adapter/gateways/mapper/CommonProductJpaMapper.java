@@ -18,5 +18,4 @@ public class CommonProductJpaMapper {
     private String description;
     private double price;
     private long createdAt;
-
 }

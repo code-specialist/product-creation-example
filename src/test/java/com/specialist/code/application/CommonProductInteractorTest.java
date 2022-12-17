@@ -24,7 +24,7 @@ public class CommonProductInteractorTest {
     ICommonProductRegisterGateway mockedGateway;
 
     @BeforeEach
-    void Setup(){
+    void setup(){
         mockedGateway = Mockito.mock(ICommonProductRegisterGateway.class);
         mockedFactory = Mockito.mock(ICommonProductFactory.class);
         mockedPresenter = Mockito.mock(ICommonProductPresenter.class);
@@ -74,9 +74,7 @@ public class CommonProductInteractorTest {
         String expectedMessage = "Name 123 is not valid";
         InvalidNameException invalidNameException = new InvalidNameException(expectedMessage);
         Mockito.when(mockedPresenter.prepareFailView(invalidNameException)).thenThrow(invalidNameException);
-        Exception failViewException = Assertions.assertThrows(InvalidNameException.class, () -> {
-            mockedPresenter.prepareFailView(invalidNameException);
-        });
+        Exception failViewException = Assertions.assertThrows(InvalidNameException.class, () -> mockedPresenter.prepareFailView(invalidNameException));
 
         // ACT
         CommonProductInteractor interactor = new CommonProductInteractor(mockedPresenter, mockedFactory, mockedGateway);
@@ -106,9 +104,7 @@ public class CommonProductInteractorTest {
         String expectedMessage = "Product with id 123 already in database";
         ProductAlreadyExistsException customProductException = new ProductAlreadyExistsException(expectedMessage);
         Mockito.when(mockedPresenter.prepareFailView(customProductException)).thenThrow(customProductException);
-        Exception failViewException = Assertions.assertThrows(ProductCustomException.class, () -> {
-            mockedPresenter.prepareFailView(customProductException);
-        });
+        Exception failViewException = Assertions.assertThrows(ProductCustomException.class, () -> mockedPresenter.prepareFailView(customProductException));
 
         // ACT
         CommonProductInteractor interactor = new CommonProductInteractor(mockedPresenter, mockedFactory, mockedGateway);

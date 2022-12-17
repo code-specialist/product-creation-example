@@ -19,7 +19,4 @@ public class TechnicalProductJpaMapper {
     private long createdAt;
     private String technicalInformation;
     private String instructionManual;
-
-
-
 }
