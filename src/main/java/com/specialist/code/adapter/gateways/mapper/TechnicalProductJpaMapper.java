@@ -1,11 +1,10 @@
 package com.specialist.code.adapter.gateways.mapper;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Entity(name = "TechnicalProduct")
 @Data
