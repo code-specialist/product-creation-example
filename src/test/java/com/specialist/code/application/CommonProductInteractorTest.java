@@ -1,13 +1,13 @@
 package com.specialist.code.application;
 
-import com.specialist.code.application.boundaries.output.ICommonProductRegisterGateway;
-import com.specialist.code.application.exception.ProductCustomException;
-import com.specialist.code.application.exception.InvalidNameException;
-import com.specialist.code.application.exception.ProductAlreadyExistsException;
-import com.specialist.code.application.interactors.CommonProductInteractor;
-import com.specialist.code.application.model.request.CommonProductRequestModel;
-import com.specialist.code.application.model.response.CommonProductResponseModel;
-import com.specialist.code.application.presenter.ICommonProductPresenter;
+import com.specialist.code.application.productcreation.boundaries.output.register.ICommonProductRegisterGateway;
+import com.specialist.code.application.productcreation.exception.ProductCustomException;
+import com.specialist.code.application.productcreation.exception.InvalidNameException;
+import com.specialist.code.application.productcreation.exception.ProductAlreadyExistsException;
+import com.specialist.code.application.productcreation.interactors.CommonProductInteractor;
+import com.specialist.code.application.productcreation.model.request.CommonProductRequestModel;
+import com.specialist.code.application.productcreation.model.response.CommonProductResponseModel;
+import com.specialist.code.application.productcreation.presenter.ICommonProductPresenter;
 import com.specialist.code.domain.CommonProduct;
 import com.specialist.code.domain.factories.ICommonProductFactory;
 import org.junit.jupiter.api.Assertions;

@@ -3,7 +3,7 @@ package com.specialist.code.adapter.gateways;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.specialist.code.application.boundaries.output.ICommonProductRegisterGateway;
+import com.specialist.code.application.productcreation.boundaries.output.register.ICommonProductRegisterGateway;
 import com.specialist.code.domain.IProduct;
 import org.bson.Document;
 

@@ -2,7 +2,7 @@ package com.specialist.code.adapter.gateways;
 
 import com.specialist.code.adapter.gateways.mapper.TechnicalProductJpaMapper;
 import com.specialist.code.adapter.repositories.ITechnicalProductRepository;
-import com.specialist.code.application.boundaries.output.ITechnicalProdutRegisterGateway;
+import com.specialist.code.application.productcreation.boundaries.output.register.ITechnicalProdutRegisterGateway;
 import com.specialist.code.domain.ITechnicalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 

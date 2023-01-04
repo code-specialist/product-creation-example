@@ -1,14 +1,14 @@
-package com.specialist.code.application.interactors;
+package com.specialist.code.application.productcreation.interactors;
 
-import com.specialist.code.application.boundaries.input.register.ITechnicalProductInputBoundary;
-import com.specialist.code.application.boundaries.output.ITechnicalProdutRegisterGateway;
-import com.specialist.code.application.exception.InvalidNameException;
-import com.specialist.code.application.exception.InvalidTechnicalInformationException;
-import com.specialist.code.application.exception.ProductAlreadyExistsException;
-import com.specialist.code.application.exception.ProductCustomException;
-import com.specialist.code.application.model.request.TechnicalProductRequestModel;
-import com.specialist.code.application.model.response.TechnicalProductResponseModel;
-import com.specialist.code.application.presenter.ITechnicalProductPresenter;
+import com.specialist.code.application.productcreation.boundaries.input.register.ITechnicalProductInputBoundary;
+import com.specialist.code.application.productcreation.boundaries.output.register.ITechnicalProdutRegisterGateway;
+import com.specialist.code.application.productcreation.exception.InvalidNameException;
+import com.specialist.code.application.productcreation.exception.InvalidTechnicalInformationException;
+import com.specialist.code.application.productcreation.exception.ProductAlreadyExistsException;
+import com.specialist.code.application.productcreation.exception.ProductCustomException;
+import com.specialist.code.application.productcreation.model.request.TechnicalProductRequestModel;
+import com.specialist.code.application.productcreation.model.response.TechnicalProductResponseModel;
+import com.specialist.code.application.productcreation.presenter.ITechnicalProductPresenter;
 import com.specialist.code.domain.ITechnicalProduct;
 import com.specialist.code.domain.factories.ITechnicalProductFactory;
 

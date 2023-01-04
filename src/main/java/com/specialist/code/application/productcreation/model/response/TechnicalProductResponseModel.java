@@ -1,4 +1,4 @@
-package com.specialist.code.application.model.response;
+package com.specialist.code.application.productcreation.model.response;
 
 import java.util.Objects;
 

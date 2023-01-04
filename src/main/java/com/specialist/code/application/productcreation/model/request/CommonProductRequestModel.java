@@ -1,4 +1,4 @@
-package com.specialist.code.application.model.request;
+package com.specialist.code.application.productcreation.model.request;
 
 public class CommonProductRequestModel {
     private String id;

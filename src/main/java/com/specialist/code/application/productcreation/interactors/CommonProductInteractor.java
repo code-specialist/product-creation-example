@@ -1,13 +1,13 @@
-package com.specialist.code.application.interactors;
+package com.specialist.code.application.productcreation.interactors;
 
-import com.specialist.code.application.boundaries.input.register.ICommonProductInputBoundary;
-import com.specialist.code.application.boundaries.output.ICommonProductRegisterGateway;
-import com.specialist.code.application.exception.ProductCustomException;
-import com.specialist.code.application.exception.InvalidNameException;
-import com.specialist.code.application.exception.ProductAlreadyExistsException;
-import com.specialist.code.application.model.request.CommonProductRequestModel;
-import com.specialist.code.application.model.response.CommonProductResponseModel;
-import com.specialist.code.application.presenter.ICommonProductPresenter;
+import com.specialist.code.application.productcreation.boundaries.input.register.ICommonProductInputBoundary;
+import com.specialist.code.application.productcreation.boundaries.output.register.ICommonProductRegisterGateway;
+import com.specialist.code.application.productcreation.exception.ProductCustomException;
+import com.specialist.code.application.productcreation.exception.InvalidNameException;
+import com.specialist.code.application.productcreation.exception.ProductAlreadyExistsException;
+import com.specialist.code.application.productcreation.model.request.CommonProductRequestModel;
+import com.specialist.code.application.productcreation.model.response.CommonProductResponseModel;
+import com.specialist.code.application.productcreation.presenter.ICommonProductPresenter;
 import com.specialist.code.domain.IProduct;
 import com.specialist.code.domain.factories.ICommonProductFactory;
 

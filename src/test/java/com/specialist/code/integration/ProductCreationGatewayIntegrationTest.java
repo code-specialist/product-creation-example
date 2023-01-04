@@ -2,7 +2,7 @@ package com.specialist.code.integration;
 
 
 import com.specialist.code.adapter.gateways.CommonProductCreationMongoDBGateway;
-import com.specialist.code.application.boundaries.output.ICommonProductRegisterGateway;
+import com.specialist.code.application.productcreation.boundaries.output.register.ICommonProductRegisterGateway;
 import com.specialist.code.domain.CommonProduct;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
