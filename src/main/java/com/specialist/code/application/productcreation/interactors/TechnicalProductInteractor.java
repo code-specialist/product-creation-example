@@ -1,6 +1,6 @@
 package com.specialist.code.application.productcreation.interactors;
 
-import com.specialist.code.application.productcreation.boundaries.input.register.ITechnicalProductInputBoundary;
+import com.specialist.code.application.productcreation.boundaries.input.register.ITechnicalProductRegisterBoundary;
 import com.specialist.code.application.productcreation.boundaries.output.register.ITechnicalProdutRegisterGateway;
 import com.specialist.code.application.productcreation.exception.InvalidNameException;
 import com.specialist.code.application.productcreation.exception.InvalidTechnicalInformationException;
@@ -12,7 +12,7 @@ import com.specialist.code.application.productcreation.presenter.ITechnicalProdu
 import com.specialist.code.domain.ITechnicalProduct;
 import com.specialist.code.domain.factories.ITechnicalProductFactory;
 
-public class TechnicalProductInteractor implements ITechnicalProductInputBoundary {
+public class TechnicalProductInteractor implements ITechnicalProductRegisterBoundary {
     ITechnicalProductFactory factory;
     ITechnicalProductPresenter presenter;
     ITechnicalProdutRegisterGateway gateway;

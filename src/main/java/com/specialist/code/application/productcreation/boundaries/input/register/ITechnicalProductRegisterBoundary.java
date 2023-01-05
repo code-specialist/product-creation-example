@@ -4,6 +4,6 @@ import com.specialist.code.application.productcreation.exception.ProductCustomEx
 import com.specialist.code.application.productcreation.model.request.TechnicalProductRequestModel;
 import com.specialist.code.application.productcreation.model.response.TechnicalProductResponseModel;
 
-public interface ITechnicalProductInputBoundary {
+public interface ITechnicalProductRegisterBoundary {
     TechnicalProductResponseModel create(TechnicalProductRequestModel requestModel) throws ProductCustomException;
 }

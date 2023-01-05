@@ -1,6 +1,6 @@
 package com.specialist.code.application.productcreation.interactors;
 
-import com.specialist.code.application.productcreation.boundaries.input.register.ICommonProductInputBoundary;
+import com.specialist.code.application.productcreation.boundaries.input.register.ICommonProductRegisterBoundary;
 import com.specialist.code.application.productcreation.boundaries.output.register.ICommonProductRegisterGateway;
 import com.specialist.code.application.productcreation.exception.ProductCustomException;
 import com.specialist.code.application.productcreation.exception.InvalidNameException;
@@ -11,7 +11,7 @@ import com.specialist.code.application.productcreation.presenter.ICommonProductP
 import com.specialist.code.domain.IProduct;
 import com.specialist.code.domain.factories.ICommonProductFactory;
 
-public class CommonProductInteractor implements ICommonProductInputBoundary {
+public class CommonProductInteractor implements ICommonProductRegisterBoundary {
     ICommonProductPresenter presenter;
     ICommonProductFactory factory;
     ICommonProductRegisterGateway gateway;

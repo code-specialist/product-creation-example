@@ -1,6 +1,6 @@
 package com.specialist.code.adapter.controller.register;
 
-import com.specialist.code.application.productcreation.boundaries.input.register.ICommonProductInputBoundary;
+import com.specialist.code.application.productcreation.boundaries.input.register.ICommonProductRegisterBoundary;
 import com.specialist.code.application.productcreation.exception.ProductCustomException;
 import com.specialist.code.application.productcreation.model.request.CommonProductRequestModel;
 import com.specialist.code.application.productcreation.model.response.CommonProductResponseModel;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController("/commonProducts")
 public class CommonProductRegisterController {
-    ICommonProductInputBoundary inputBoundary;
+    ICommonProductRegisterBoundary inputBoundary;
 
-    public CommonProductRegisterController(ICommonProductInputBoundary inputBoundary) {
+    public CommonProductRegisterController(ICommonProductRegisterBoundary inputBoundary) {
         this.inputBoundary = inputBoundary;
     }
 
