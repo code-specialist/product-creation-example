@@ -8,11 +8,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.specialist.code</groupId>
-    <artifactId>ms-clean-architecture-template</artifactId>
+    <artifactId>prodcut-creation-example</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>ms-clean-architecture-template</name>
+    <name>product-creation-example</name>
     <url>http://maven.apache.org</url>
 
     <properties>
