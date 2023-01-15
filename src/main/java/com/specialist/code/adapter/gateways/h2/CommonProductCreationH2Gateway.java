@@ -1,4 +1,4 @@
-package com.specialist.code.adapter.gateways;
+package com.specialist.code.adapter.gateways.h2;
 
 import com.specialist.code.adapter.gateways.mapper.CommonProductJpaMapper;
 import com.specialist.code.adapter.repositories.ICommonProductRepository;

@@ -1,6 +1,6 @@
 package com.specialist.code.adapter.beanconfigs;
 
-import com.specialist.code.adapter.gateways.CommonProductCreationH2Gateway;
+import com.specialist.code.adapter.gateways.h2.CommonProductCreationH2Gateway;
 import com.specialist.code.adapter.presenter.CommonProductPresenter;
 import com.specialist.code.application.productcreation.boundaries.input.register.ICommonProductRegisterBoundary;
 import com.specialist.code.application.productcreation.boundaries.output.register.ICommonProductRegisterGateway;

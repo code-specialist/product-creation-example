@@ -1,23 +1,19 @@
-package com.specialist.code.adapter.gateways;
+package com.specialist.code.adapter.gateways.mongodb;
 
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.specialist.code.application.productcreation.boundaries.output.register.ICommonProductRegisterGateway;
 import com.specialist.code.domain.IProduct;
 import org.bson.Document;
 
 import static com.mongodb.client.model.Filters.eq;
 
-public class CommonProductCreationMongoDBGateway implements ICommonProductRegisterGateway {
+public class CommonProductCreationMongoDBGateway extends MongoDBConnection implements ICommonProductRegisterGateway {
 
-    private static final String COMMON_PRODUCT_TABLE = "products";
+    private static final String COMMON_PRODUCT_TABLE = "common_products";
     private final MongoCollection<Document> collection;
 
     public CommonProductCreationMongoDBGateway(String host, int port) {
-        MongoDatabase database;
-        MongoClient client = new MongoClient(host, port);
-        database = client.getDatabase("commonProducts");
+        super(host, port);
         collection = database.getCollection(COMMON_PRODUCT_TABLE);
     }
 
