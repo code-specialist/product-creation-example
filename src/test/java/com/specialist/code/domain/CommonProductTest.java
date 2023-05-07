@@ -14,7 +14,6 @@ public class CommonProductTest {
     @Test
     public void test_givenAbcName_whenNameIsNotValid_thenIsFalse(){
         IProduct product = new CommonProduct("Abc", "Name", "description", 0.5d, Instant.now().toEpochMilli());
-
         assertFalse(product.nameIsValid());
     }
 
