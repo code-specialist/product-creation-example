@@ -6,9 +6,11 @@ import com.specialist.code.application.productcreation.model.request.TechnicalPr
 import com.specialist.code.application.productcreation.model.response.TechnicalProductResponseModel;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/technicalProduct")
+@RestController
+@RequestMapping("/technicalProduct")
 public class TechnicalProductRegisterController {
     ITechnicalProductRegisterBoundary inputBoundary;
 
@@ -16,7 +18,7 @@ public class TechnicalProductRegisterController {
         this.inputBoundary = inputBoundary;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public TechnicalProductResponseModel create(@RequestBody TechnicalProductRequestModel requestModel) throws ProductCustomException {
         return inputBoundary.create(requestModel);
     }
